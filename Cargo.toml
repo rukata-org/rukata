@@ -17,3 +17,7 @@ unsafe_code = "forbid"
 enum_glob_use = "deny"
 
 [workspace.dependencies]
+rukata-puzzle-config = { path="crates/rukata-puzzle-config" }
+rukata-puzzle-data = { path="crates/rukata-puzzle-data" }
+rukata-puzzles = { path="crates/rukata-puzzles" }
+rukata-settings = { path="crates/rukata-settings" }

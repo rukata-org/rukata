@@ -1,0 +1,6 @@
+[package]
+name = "rukata"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

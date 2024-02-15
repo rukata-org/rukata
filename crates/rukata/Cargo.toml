@@ -9,5 +9,5 @@ license.workspace = true
 workspace = true
 
 [dependencies]
-rukata-puzzles.workspace = true
+rukata-puzzle-data.workspace = true
 rukata-settings.workspace = true

@@ -18,7 +18,6 @@ enum_glob_use = "deny"
 
 [workspace.dependencies]
 rukata-puzzle-data = { path="crates/rukata-puzzle-data" }
-rukata-puzzles = { path="crates/rukata-puzzles" }
 rukata-settings = { path="crates/rukata-settings" }
 
 camino = "1.1"

@@ -1,0 +1,1 @@
+A simple puzzle to help understand the workflow of the puzzles.

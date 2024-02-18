@@ -5,7 +5,20 @@ edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 
+[features]
+list = ["dep:itertools"]
+
 [dependencies]
+itertools = { workspace = true, optional = true }
+
+phf.workspace = true
+
+[build-dependencies]
+camino.workspace = true
+glob.workspace = true
+phf_codegen.workspace = true
+serde_json.workspace = true
+serde.workspace = true
 
 [lints]
 workspace = true

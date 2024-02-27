@@ -1,5 +1,7 @@
+use camino::Utf8PathBuf;
 use console::Style;
 use lazy_static::lazy_static;
+use std::fs;
 use std::ops::Deref;
 
 lazy_static! {
@@ -24,4 +26,26 @@ pub fn print_red_title<S: AsRef<str>>(display: S) {
 
 pub fn print_white<S: AsRef<str>>(display: S) {
     print_common(display.as_ref(), WHITE.deref());
+}
+
+pub fn generate_file(file_path: Utf8PathBuf, file_data: &[u8]) -> Option<String> {
+    if let Some(parent) = file_path.parent() {
+        if let Err(e) = fs::create_dir_all(parent) {
+            return Some(format!(
+                "Failed to create directory `{}` with error: {}",
+                parent, e
+            ));
+        }
+    } else {
+        return Some(format!("Failed to find parent for file `{}`", file_path));
+    }
+
+    if let Err(e) = fs::write(&file_path, file_data) {
+        return Some(format!(
+            "Failed to create file `{}` with error: {}",
+            file_path, e
+        ));
+    }
+
+    None
 }

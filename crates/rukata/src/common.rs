@@ -8,6 +8,7 @@ lazy_static! {
     static ref CYAN_TITLE: Style = Style::new().bold().cyan();
     static ref RED_TITLE: Style = Style::new().bold().red();
     static ref WHITE: Style = Style::new().white();
+    static ref GREEN: Style = Style::new().green();
 }
 
 fn print_common(display: &str, style: &Style) {
@@ -26,6 +27,10 @@ pub fn print_red_title<S: AsRef<str>>(display: S) {
 
 pub fn print_white<S: AsRef<str>>(display: S) {
     print_common(display.as_ref(), WHITE.deref());
+}
+
+pub fn print_green<S: AsRef<str>>(display: S) {
+    print_common(display.as_ref(), GREEN.deref());
 }
 
 pub fn generate_file(file_path: Utf8PathBuf, file_data: &[u8]) -> Option<String> {

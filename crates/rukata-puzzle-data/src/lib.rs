@@ -31,6 +31,10 @@ impl PuzzleFileData {
             PuzzleFileEnum::String(data) => data,
         }
     }
+
+    pub fn check_data(&self, data: &[u8]) -> bool {
+        self.get_raw_data() == data
+    }
 }
 
 pub struct PuzzleData {

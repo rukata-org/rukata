@@ -129,6 +129,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "rukata-companion"
+version = "0.1.0"
+dependencies = [
+ "camino",
+ "rukata-puzzle-data",
+]
+
+[[package]]
 name = "rukata-puzzle-data"
 version = "0.1.0"
 dependencies = [

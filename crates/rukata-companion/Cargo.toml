@@ -1,0 +1,16 @@
+[package]
+name = "rukata-companion"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+
+[build-dependencies]
+rukata-puzzle-data = { workspace = true, features = ["list"] }
+
+camino.workspace = true
+
+[lints]
+workspace = true

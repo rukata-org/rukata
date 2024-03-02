@@ -5,6 +5,9 @@
       <sourceFolder url="file://$MODULE_DIR$/crates/rukata-puzzle-data/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/rukata-settings/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/rukata/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/rukata-companion/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/crates/rukata-companion/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/crates/rukata-companion/src/pages/puzzles" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

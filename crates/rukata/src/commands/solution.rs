@@ -40,14 +40,8 @@ impl Command for SolutionCommand {
             }
         };
 
-        // Get the puzzle data.
-        let title = puzzle_data.get_title();
-        let starter_files = puzzle_data.get_starter_files();
-        let readme_data = puzzle_data.get_readme_data();
-        let readme_files = puzzle_data.get_readme_files();
-        let solution_files = puzzle_data.get_solution_files();
-
         // Generate the main folder.
+        let title = puzzle_data.get_title();
         let folder_name = format!("p{:0>5} - {}", puzzle_id, title);
 
         let directory = settings.get_directory().join("solution").join(folder_name);
@@ -70,34 +64,11 @@ impl Command for SolutionCommand {
         }
 
         // Populate the main folder.
-        for file_data in starter_files {
+        for file_data in puzzle_data.get_final_files() {
             let file_path = directory.join(file_data.get_relative_path());
-            if let Some(error) = generate_file(file_path, file_data.get_compressed_data()) {
+            if let Some(error) = generate_file(file_path, file_data.get_raw_data()) {
                 self.errors.push(error);
             }
-        }
-
-        let readme_path = directory.join("README.md");
-        if let Some(error) = generate_file(readme_path, readme_data.as_bytes()) {
-            self.errors.push(error);
-        }
-
-        for file_data in readme_files {
-            let file_path = directory.join(file_data.get_relative_path());
-            if let Some(error) = generate_file(file_path, file_data.get_compressed_data()) {
-                self.errors.push(error);
-            }
-        }
-
-        for file_data in solution_files {
-            let file_path = directory.join(file_data.get_relative_path());
-            if let Some(error) = generate_file(file_path, file_data.get_compressed_data()) {
-                self.errors.push(error);
-            }
-        }
-
-        if !self.errors.is_empty() {
-            return;
         }
     }
 

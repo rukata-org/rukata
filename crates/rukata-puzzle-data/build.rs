@@ -48,8 +48,24 @@ impl FileData {
     fn write_to_file(&self, writer: &mut BufWriter<File>) {
         write!(
             writer,
-            "&PuzzleFileData {{ relative_path: \"{}\", data_uncompressed: &{:?} }}",
+            "&PuzzleFileData {{ relative_path: \"{}\", data: &PuzzleFileEnum::File(&{:?}) }}",
             self.relative_path, self.data_uncompressed
+        )
+        .unwrap();
+    }
+}
+
+struct StringData {
+    relative_path: Utf8PathBuf,
+    data_string: String,
+}
+
+impl StringData {
+    fn write_to_file(&self, writer: &mut BufWriter<File>) {
+        write!(
+            writer,
+            "&PuzzleFileData {{ relative_path: \"{}\", data: &PuzzleFileEnum::String(&{:?}) }}",
+            self.relative_path, self.data_string
         )
         .unwrap();
     }
@@ -60,9 +76,9 @@ struct PuzzleData {
     id: u16,
     starter: Vec<FileData>,
     solution: Vec<FileData>,
-    readme: String,
+    readme: StringData,
     readme_files: Vec<FileData>,
-    read_only_files: Vec<String>,
+    read_only_file_paths: Vec<String>,
 }
 
 impl PuzzleData {
@@ -88,12 +104,14 @@ impl PuzzleData {
         Self::write_file_vector(writer, &self.starter);
         write!(writer, "    solution: ").unwrap();
         Self::write_file_vector(writer, &self.solution);
-        writeln!(writer, "    readme: {:?},", self.readme).unwrap();
+        write!(writer, "    readme: ").unwrap();
+        self.readme.write_to_file(writer);
+        writeln!(writer, ",").unwrap();
         write!(writer, "    readme_files: ").unwrap();
         Self::write_file_vector(writer, &self.readme_files);
-        write!(writer, "    read_only_files: &[").unwrap();
-        for read_only_file in &self.read_only_files {
-            write!(writer, "&\"{}\",", read_only_file).unwrap();
+        write!(writer, "    read_only_file_paths: &[").unwrap();
+        for read_only_file_path in &self.read_only_file_paths {
+            write!(writer, "&\"{}\",", read_only_file_path).unwrap();
         }
         writeln!(writer, "],").unwrap();
         writeln!(writer, "}};").unwrap();
@@ -127,7 +145,7 @@ fn get_file_list(base_path: &Utf8PathBuf, relative_paths: &[String]) -> Vec<File
         .collect()
 }
 
-fn get_readme_data(path: &Utf8PathBuf, config: &RukataPuzzleConfig) -> String {
+fn get_readme_data(path: &Utf8PathBuf, config: &RukataPuzzleConfig) -> StringData {
     // Get the string data of the readme.
     let mut data = String::new();
     let file = File::open(path).unwrap_or_else(|_| panic!("Unable to open {}", path));
@@ -142,7 +160,10 @@ fn get_readme_data(path: &Utf8PathBuf, config: &RukataPuzzleConfig) -> String {
     readme_data =
         format!("# {} - Puzzle ID {:0>5}\n", config.title, config.id) + readme_data.as_str();
     readme_data += format!("\n\n### Command\n`rukuta generate {}`\n", config.id).as_str();
-    readme_data
+    StringData {
+        relative_path: "README.md".parse().unwrap(),
+        data_string: readme_data,
+    }
 }
 
 fn get_puzzle_data(puzzle_config_path: &Utf8PathBuf) -> PuzzleData {
@@ -163,7 +184,7 @@ fn get_puzzle_data(puzzle_config_path: &Utf8PathBuf) -> PuzzleData {
         solution: get_file_list(&puzzle_folder_path.join("solution"), &config.solution),
         readme: get_readme_data(&puzzle_folder_path.join("README.md"), &config),
         readme_files: get_file_list(&puzzle_folder_path, &config.readme_files),
-        read_only_files: config.get_read_only_files(),
+        read_only_file_paths: config.get_read_only_files(),
     }
 }
 

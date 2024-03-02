@@ -51,9 +51,10 @@ fn generate_markdown_files(path: &Utf8Path) {
             + ".md";
         {
             let readme_file_path = output_path.join(hyphenated_title);
-            let mut readme_data = puzzle_data.get_readme_data().to_string();
-            readme_data = format!("---\ntitle: {:?}\n---\n", puzzle_title) + readme_data.as_str();
-            fs::write(readme_file_path.clone(), readme_data).unwrap_or_else(|e| {
+            let mut readme_string = puzzle_data.get_readme_str().to_string();
+            readme_string =
+                format!("---\ntitle: {:?}\n---\n", puzzle_title) + readme_string.as_str();
+            fs::write(readme_file_path.clone(), readme_string).unwrap_or_else(|e| {
                 panic!(
                     "Failed to write file `{}` with error `{}`",
                     readme_file_path, e
@@ -63,7 +64,7 @@ fn generate_markdown_files(path: &Utf8Path) {
 
         for file in puzzle_readme_files {
             let file_path = output_path.join(file.get_relative_path());
-            fs::write(file_path.clone(), file.get_compressed_data()).unwrap_or_else(|e| {
+            fs::write(file_path.clone(), file.get_raw_data()).unwrap_or_else(|e| {
                 panic!("Failed to write file `{}` with error `{}`", file_path, e)
             });
         }

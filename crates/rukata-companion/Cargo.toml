@@ -11,6 +11,7 @@ license.workspace = true
 rukata-puzzle-data = { workspace = true, features = ["list"] }
 
 camino.workspace = true
+mdbook.workspace = true
 
 [lints]
 workspace = true

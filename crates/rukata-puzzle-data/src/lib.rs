@@ -1,5 +1,6 @@
 #[cfg(feature = "list")]
 use itertools::Itertools;
+use std::fmt;
 
 pub enum PuzzleFileEnum {
     File(&'static [u8]),
@@ -37,6 +38,20 @@ impl PuzzleFileData {
     }
 }
 
+#[derive(Debug, Clone)]
+pub enum PuzzleDifficulty {
+    Basic,
+    Intermediate,
+    Advanced,
+    None,
+}
+
+impl fmt::Display for PuzzleDifficulty {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+    }
+}
+
 pub struct PuzzleData {
     pub(crate) title: &'static str,
     pub(crate) id: &'static u16,
@@ -45,6 +60,9 @@ pub struct PuzzleData {
     pub(crate) readme: &'static PuzzleFileData,
     pub(crate) readme_files: &'static [&'static PuzzleFileData],
     pub(crate) read_only_file_paths: &'static [&'static str],
+    pub(crate) difficulty: &'static PuzzleDifficulty,
+    pub(crate) categories: &'static [&'static str],
+    pub(crate) libraries: &'static [&'static str],
 }
 
 impl PuzzleData {
@@ -66,6 +84,18 @@ impl PuzzleData {
 
     pub fn get_read_only_file_paths(&self) -> &[&str] {
         self.read_only_file_paths
+    }
+
+    pub fn get_difficulty(&self) -> &PuzzleDifficulty {
+        self.difficulty
+    }
+
+    pub fn get_categories(&self) -> &[&str] {
+        self.categories
+    }
+
+    pub fn get_libraries(&self) -> &[&str] {
+        self.libraries
     }
 
     pub fn get_base_files(&self) -> Vec<&PuzzleFileData> {

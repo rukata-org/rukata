@@ -9,6 +9,16 @@ use std::process::Command;
 
 static RUSTFMT_CMD: &str = "rustfmt";
 
+#[derive(Debug, Clone, Default, Deserialize)]
+#[serde(rename_all = "lowercase")]
+enum RukataPuzzleDifficulty {
+    Basic,
+    Intermediate,
+    Advanced,
+    #[default]
+    None,
+}
+
 #[derive(Debug, Clone, Deserialize)]
 struct RukataPuzzleConfig {
     title: String,
@@ -16,6 +26,9 @@ struct RukataPuzzleConfig {
     starter: Vec<String>,
     solution: Vec<String>,
     readme_files: Vec<String>,
+    difficulty: RukataPuzzleDifficulty,
+    categories: Vec<String>,
+    libraries: Vec<String>,
 }
 
 impl RukataPuzzleConfig {
@@ -79,6 +92,9 @@ struct PuzzleData {
     readme: StringData,
     readme_files: Vec<FileData>,
     read_only_file_paths: Vec<String>,
+    difficulty: RukataPuzzleDifficulty,
+    categories: Vec<String>,
+    libraries: Vec<String>,
 }
 
 impl PuzzleData {
@@ -112,6 +128,22 @@ impl PuzzleData {
         write!(writer, "    read_only_file_paths: &[").unwrap();
         for read_only_file_path in &self.read_only_file_paths {
             write!(writer, "&\"{}\",", read_only_file_path).unwrap();
+        }
+        writeln!(writer, "],").unwrap();
+        writeln!(
+            writer,
+            "    difficulty: &PuzzleDifficulty::{:?},",
+            self.difficulty
+        )
+        .unwrap();
+        write!(writer, "    categories: &[").unwrap();
+        for category in &self.categories {
+            write!(writer, "&\"{}\",", category).unwrap();
+        }
+        writeln!(writer, "],").unwrap();
+        write!(writer, "    libraries: &[").unwrap();
+        for library in &self.libraries {
+            write!(writer, "&\"{}\",", library).unwrap();
         }
         writeln!(writer, "],").unwrap();
         writeln!(writer, "}};").unwrap();
@@ -185,6 +217,9 @@ fn get_puzzle_data(puzzle_config_path: &Utf8PathBuf) -> PuzzleData {
         readme: get_readme_data(&puzzle_folder_path.join("README.md"), &config),
         readme_files: get_file_list(&puzzle_folder_path, &config.readme_files),
         read_only_file_paths: config.get_read_only_files(),
+        difficulty: config.difficulty,
+        categories: config.categories,
+        libraries: config.libraries,
     }
 }
 

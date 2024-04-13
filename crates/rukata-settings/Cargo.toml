@@ -1,0 +1,24 @@
+[package]
+name = "rukata-settings"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[features]
+test-utils = []
+
+[dependencies]
+camino = { workspace = true, features = ["serde1"] }
+serde.workspace = true
+serde_json.workspace = true
+
+[dev-dependencies]
+rukata-settings = { path = ".", features = ["test-utils"] }
+
+pretty_assertions.workspace = true
+lazy_static.workspace = true
+scopeguard.workspace = true
+
+[lints]
+workspace = true

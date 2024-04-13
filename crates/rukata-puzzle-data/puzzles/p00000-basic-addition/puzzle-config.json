@@ -1,0 +1,19 @@
+{
+  "title": "Basic Addition",
+  "id": 0,
+  "solution": [
+    "src/lib.rs"
+  ],
+  "starter": [
+    "src/lib.rs",
+    "tests/test.rs",
+    "Cargo.toml",
+    ".gitignore"
+  ],
+  "readme_files": [],
+  "difficulty": "basic",
+  "categories": [
+    "Tutorial"
+  ],
+  "libraries": []
+}

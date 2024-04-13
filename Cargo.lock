@@ -1466,7 +1466,7 @@ checksum = "c08c74e62047bb2de4ff487b251e4a92e24f48745648451635cec7d591162d9f"
 
 [[package]]
 name = "rukata"
-version = "0.1.0"
+version = "0.0.1"
 dependencies = [
  "camino",
  "clap",
@@ -1479,7 +1479,7 @@ dependencies = [
 
 [[package]]
 name = "rukata-companion"
-version = "0.1.0"
+version = "0.0.1"
 dependencies = [
  "camino",
  "mdbook",
@@ -1488,7 +1488,7 @@ dependencies = [
 
 [[package]]
 name = "rukata-puzzle-data"
-version = "0.1.0"
+version = "0.0.1"
 dependencies = [
  "camino",
  "glob",
@@ -1501,7 +1501,7 @@ dependencies = [
 
 [[package]]
 name = "rukata-settings"
-version = "0.1.0"
+version = "0.0.1"
 dependencies = [
  "camino",
  "lazy_static",

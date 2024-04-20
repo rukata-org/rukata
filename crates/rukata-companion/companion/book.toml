@@ -1,9 +1,0 @@
-[book]
-authors = ["EngineerN"]
-language = "en"
-multilingual = false
-src = "src"
-title = "Rukata Companion"
-
-[output.html.fold]
-enable = true
